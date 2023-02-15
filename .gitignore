@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+.env
+notes.md
 
 # production
 /build
