@@ -64,6 +64,7 @@ export const EditFrom = ({
     <div className="py-10 md:w-1/2">
       <form onSubmit={handleSubmit}>
         <Input
+          required
           label="title"
           name="title"
           disabled={loading}
@@ -71,6 +72,7 @@ export const EditFrom = ({
           onChange={(title) => setPost((prev) => ({ ...prev, title }))}
         />
         <Input
+          required
           label="body"
           name="title"
           disabled={loading}
@@ -100,7 +102,7 @@ export const EditFrom = ({
           name="back"
           type="button"
           disabled={loading}
-          styles="bg-medium"
+          styles="bg-dark"
           onClick={() => navigate(-1)}
         />
 

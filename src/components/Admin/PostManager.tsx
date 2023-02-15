@@ -49,6 +49,7 @@ export const PostManager = ({
     <div className="py-10 md:w-1/2">
       <form onSubmit={handleSubmit}>
         <Input
+          required
           label="title"
           name="title"
           disabled={loading}
@@ -56,6 +57,7 @@ export const PostManager = ({
           onChange={(title) => setPost((prev) => ({ ...prev, title }))}
         />
         <Input
+          required
           label="body"
           name="title"
           disabled={loading}
