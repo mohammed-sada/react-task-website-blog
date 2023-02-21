@@ -37,10 +37,8 @@ export default function SinglePost() {
 
   return (
     <Screen>
-      <>
-        <PostInfo post={post} />
-        <Comments comments={comments} />
-      </>
+      <PostInfo post={post} />
+      <Comments comments={comments} />
     </Screen>
   );
 }

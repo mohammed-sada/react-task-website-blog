@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export const Screen = ({
   styles,
   padding,
@@ -7,7 +9,7 @@ export const Screen = ({
   styles?: string;
   padding?: boolean;
   center?: boolean;
-  children: JSX.Element;
+  children: ReactNode;
 }) => {
   return (
     <div className={`h-full ${styles} ${padding ? "p-4 md:p-20" : ""}`}>

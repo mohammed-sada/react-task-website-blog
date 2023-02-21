@@ -37,10 +37,8 @@ export default function User() {
   if (posts.length === 0 || !user) return <PageLoader />;
   return (
     <Screen padding>
-      <>
-        <UserInfo user={user} />
-        <Posts posts={posts} />
-      </>
+      <UserInfo user={user} />
+      <Posts posts={posts} />
     </Screen>
   );
 }

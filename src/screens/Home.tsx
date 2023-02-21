@@ -1,22 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Post } from "../types";
-import { fetchFromApi } from "../helpers";
 import { Posts } from "../components/posts";
 import { Screen, SkeletonLoading } from "../components/UI";
-import { useLocalStorage } from "../hooks";
+import { useApi, useLocalStorage } from "../hooks";
+import postsApi from "../api/posts";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [localPosts] = useLocalStorage<Post[]>("user_posts");
+  const {
+    data: posts,
+    loading,
+    request: getPosts,
+  } = useApi<Post[]>(postsApi.getPosts);
 
-  async function getPosts() {
-    setLoading(true);
-    const posts: Post[] = await fetchFromApi("posts");
-    setPosts(posts);
-    setLoading(false);
-  }
+  const [localPosts] = useLocalStorage<Post[]>("user_posts");
 
   useEffect(() => {
     getPosts();

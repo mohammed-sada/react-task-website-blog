@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import postsApi from "../../api/posts";
 
 import { fetchFromApi } from "../../helpers";
 import { Post } from "../../types";
@@ -20,41 +21,24 @@ export const EditFrom = ({
   const [post, setPost] = useState<Post>(initialPost);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const result = await fetchFromApi("posts", {
-      // fake
-      method: "Put",
-      body: post,
-    });
 
-    const newPosts = posts.map((p) => {
-      if (p.id === post.id) {
-        return {
-          ...p,
-          title: post.title,
-          body: post.body,
-        };
-      } else return p;
-    });
+    const newPosts = await postsApi.editPost(post, posts);
     setPosts([...newPosts]);
     setLoading(false);
     toast.success("Post updated successfully");
   };
 
-  const deletePost = async () => {
+  const handleDelete = async () => {
     setLoading(true);
-    const result = await fetchFromApi(`posts/${post.id}`, {
-      // fake
-      method: "Delete",
-      body: post,
-    });
 
-    const newPosts = posts.filter((p) => p.id !== post.id);
+    const newPosts = await postsApi.deletePost(post, posts);
     setPosts([...newPosts]);
     setLoading(false);
     toast.success("Post deleted successfully");
+
     setTimeout(() => {
       navigate("/admin");
     }, 1000);
@@ -62,7 +46,7 @@ export const EditFrom = ({
 
   return (
     <div className="py-10 md:w-1/2">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleEdit}>
         <Input
           required
           label="title"
@@ -94,7 +78,7 @@ export const EditFrom = ({
             type="button"
             styles="bg-danger"
             disabled={loading}
-            onClick={deletePost}
+            onClick={handleDelete}
           />
         </div>
         <Button

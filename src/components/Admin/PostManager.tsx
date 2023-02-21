@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { toast } from "react-hot-toast";
+import postsApi from "../../api/posts";
 import AuthContext from "../../context/AuthContext";
 
-import { fetchFromApi } from "../../helpers";
 import { Post } from "../../types";
 import { Button, Input, Spinner } from "../UI";
 
@@ -25,14 +25,12 @@ export const PostManager = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const result = await fetchFromApi("posts", {
-      method: "Post",
-      body: post,
-    });
+
+    const newPost = await postsApi.createPost(post as Post);
 
     setPosts([
       ...posts,
-      { ...result, id: Date.now(), userId: user?.email.split("@")[0] },
+      { ...newPost, id: Date.now(), userId: user?.email.split("@")[0] },
     ]); // because this is a fake api, I generated my own id, if I don't then all of the new created posts will get the same id which will result in issues
     setPost({ title: "", body: "" });
 
